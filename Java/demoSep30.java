@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Demo {
-    public statis void main(string[] args){
+    public static void main(String[] args){
         List<Integer> myList = new ArrayList<>();
         
         myList.add(10);
