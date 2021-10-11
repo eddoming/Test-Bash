@@ -38,14 +38,17 @@ int main(){
 //     sumBigger=0;
     //ALERT Here I learn soemthing very usefull I can allocate more memory for values, but not increase the size of the class (int 4, souble 8) so if the number I use is bigger tan 4 bytes for the integer then I have to change, if I aloccate I will have the same problem.
     long long sumBigger=0;
+//     int sumBiggerv2=(int)malloc(8); Did not work
     int l=10000000;
     //Dynamic array
     int *drr=(int *) malloc(sizeof(int) * l);
     for (int i =0;i<l;i++){
         drr[i]=(i+1);
         sumBigger+=drr[i];
+//         sumBiggerv2+=drr[i]; Did not work
     }
      printf("The valor of sum is %lld\n",sumBigger);
+     printf("The valor of sum is %d\n",sumBiggerv2);
     free(drr);
     return 0;
 }
