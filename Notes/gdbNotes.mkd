@@ -3,14 +3,15 @@
   * Run first with `gcc -g` to keep all the lines
   * Start gdb with `gdb a.out`, you can start with `run`.
   * The main thing to use is `break` you can used with a line in the code or a function, example. `break 65` or `break main`, and then use `run`
-  *We can delete a break point with `delete main` or `delete 65`.
-* With the -g flag in the complier we can use `layout src` and the see the code, or if we understand machine lenguaje we use `layout next`. 
-* To Observe a variable in the code, we use `print variable` if variable is a pointer (*variable) we use `*variable` and will print the first input inside, to print everthing we use `print *variable@[size]`
-* We can use `watch variable` to explore how it change in a loop or in general in teh code.
-* We can use `continue` and  `refresh` to update the layput and continue in the run.
-* We can set values in the variables with `set variable 10`
-* Last but not least important is to add a break conditional `break 10 if x == 20`, this will break if in line 10 x will have the value of 20
+  * We can delete a break point with `delete main` or `delete 65`.
+
+  * With the -g flag in the complier we can use `layout src` and the see the code, or if we understand machine lenguaje we use `layout next`.
+    * To Observe a variable in the code, we use `print variable` if variable is a pointer (*variable) we use `*variable` and will print the first input inside, to print everthing we use `print *variable@[size]`
+    * We can use `watch variable` to explore how it change in a loop or in general in teh code.
+    * We can use `continue` and  `refresh` to update the layput and continue in the run.
+    * We can set values in the variables with `set variable 10`
+    * Last but not least important is to add a break conditional `break 10 if x == 20`, this will break if in line 10 x will have the value of 20
 
 **Notes for debugging in Java**
 
-We use eclipse? 
+We use eclipse?
