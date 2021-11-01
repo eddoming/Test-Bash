@@ -2,8 +2,10 @@
 
   * Run first with `gcc -g` to keep all the lines
   * Start gdb with `gdb a.out`, you can start with `run`.
+  *To finish we use `quit` or `q`
   * The main thing to use is `break` you can used with a line in the code or a function, example. `break 65` or `break main`, and then use `run`
   * We can delete a break point with `delete main` or `delete 65`.
+  * To move inside a function we use `step`, to move to the next line we use `next` or `n`, previous `p`
 
   * With the -g flag in the complier we can use `layout src` and the see the code, or if we understand machine lenguaje we use `layout next`.
     * To Observe a variable in the code, we use `print variable` if variable is a pointer (*variable) we use `*variable` and will print the first input inside, to print everthing we use `print *variable@[size]`
