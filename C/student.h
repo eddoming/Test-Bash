@@ -27,7 +27,17 @@ Student *constructorStudent(int newID,
                             const char *lastname,
                             Year year,
                             double gpa,
-                            int Dateyear,
-                            int Datemonth,
-                            int Dateday){
-                            }
+                            // int Dateyear,
+                            // int Datemonth,
+                            // int Dateday);
+                            Date d);
+void initStudent(Student *s,
+                  int newID,
+                  const char *firstname,
+                  const char *lastname,
+                  Year year,
+                  double gpa,
+                    Date d);
+void printStudent(const Student *s);
+void printRoster(Student **s, int n);
+char *studenttoString(const Student *s);
