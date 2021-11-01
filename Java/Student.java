@@ -14,4 +14,14 @@ public class Student{
         this.id = id;
         this.calification = calification;
     }
+    public void setGpa(double gpa) {
+      if (gpa<0.0 || gpa >4.0){
+        throw new IllegalArgumentException("Invalid gpa");
+      }
+      this.gpa = gpa;
+    }
+    public int getAge(){
+      Period p = Period.between(dateofBirth, LocalDate.now());
+      return p.getYears();
+    }
 }

@@ -21,6 +21,11 @@ public class demo26Oct {
     jane.year = Year.SENIOR;
 
     Student janev2 = new.Student("Jane","Bourke",4.5,2545454,Year.SENIOR);
+
+    System.out.println(me);
+    me.gpa=3.9;
+    setGpa(4.5);//Better options
+    System.out.println(janev2);
   }
   //We can use
 
