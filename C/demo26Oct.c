@@ -43,5 +43,6 @@ int main(int argc, char *argv){
   free(jane->firstname);
   free(jane->lastname);
   free(jane);
+  //New options with 
   return 0;
 }
