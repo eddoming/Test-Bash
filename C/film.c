@@ -40,3 +40,24 @@ void printFilm(const Film *f){
   f->director.firstName,
   f->imdbRating);
 }
+void initFilm(Film *f,const char *EIDR,const char *title, Person director, double imdbRating){
+  f->EIDR=strdup(EIDR);
+  f->title = strdup(title);
+  f->imdbRating = imdbRating;
+  f->director = director;
+
+}
+void printFilms(const Film *f,int n){
+for (int i=0;i<n;i++){
+  printFilm(&f[i]);
+}
+
+}
+//One leve for const, so we can not use function with the same name...
+void printFilmsv2(Film **f,int n){
+for (int i=0;i<n;i++){
+  //We don call the & because we are in a doble pointer, we don need that
+  printFilm(f[i]);
+}
+
+}

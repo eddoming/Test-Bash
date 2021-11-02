@@ -31,3 +31,6 @@ typedef struct {
 Film *creatFilm(const char *EIDR,const char *title, Person director, double imdbRating);
 void printFilm(const Film *f);
 char *printFilmString(const Film *f);
+void initFilm(Film *f,const char *EIDR,const char *title, Person director, double imdbRating);
+void printFilmsv2(Film **f,int n);
+void printFilms(const Film *f,int n);
