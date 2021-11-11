@@ -22,7 +22,7 @@ int main(){
         sum+=primes[i];
     }
     printf("The valor of the first 10 primes is %d\n",sum);
-    
+
     sum=0;
     //if k=10,000,000 Segmentation fault;
     int k=10000;
@@ -32,7 +32,7 @@ int main(){
         sum+=crr[i];
     }
     printf("The valor of the first 10 numbers is %d\n",sum);
-    
+
     //We need to alocate memory with malloc;
 //     int* sumBigger=(int*)malloc(sizeof(int)*10);
 //     sumBigger=0;
@@ -48,7 +48,7 @@ int main(){
 //         sumBiggerv2+=drr[i]; Did not work
     }
      printf("The valor of sum is %lld\n",sumBigger);
-     printf("The valor of sum is %d\n",sumBiggerv2);
+     // printf("The valor of sum is %d\n",sumBiggerv2);
     free(drr);
     return 0;
 }
