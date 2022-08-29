@@ -1,23 +1,10 @@
 #include <stdlib.h>
 #include <stdio.h>
-int main(){
-  int x=127;
-  int residuo=0;
-  int newnum=0;
-   while(x!=0){
-      residuo=x%10;
-      x-=residuo;
-      x/=10;
-      newnum*=10;
-      newnum+=residuo;
-   }
-  printf("%d\n",newnum);
-  return 0;
-}
-
-bool isPalindrome(int x){
+//Remeber in c we did not have Bool, only c++
+int isPalindrome(int x){
     if (x<0){
-        return false;
+        return 0;
+        // return false;
     }
     int xcopy=x;
     int residuo=0;
@@ -30,12 +17,16 @@ bool isPalindrome(int x){
       newnum+=residuo;
    }
     if (xcopy==newnum){
-        return true;
+        // return true;
+        // return kTRUE;
+        return 1;
     }
-    return false;
+    // return false;
+    // return kFALSE;
+    return 0;
 }
 int romanToInt(char * s){
-    
+
 int i=0;
 int integer=0;
 while(s[i]!='\0'){
@@ -111,4 +102,19 @@ while(s[i]!='\0'){
 }
 
     return integer;
+}
+
+int main(){
+  int x=127;
+  int residuo=0;
+  int newnum=0;
+   while(x!=0){
+      residuo=x%10;
+      x-=residuo;
+      x/=10;
+      newnum*=10;
+      newnum+=residuo;
+   }
+  printf("%d\n",newnum);
+  return 0;
 }

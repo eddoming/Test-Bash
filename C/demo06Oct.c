@@ -4,14 +4,14 @@
 //TODO
 int * deepCopy(int *arr,int n){
     if (arr == NULL || n<0){
-        return NULL;   
+        return NULL;
     }
-    
+
     int *c=(int*) malloc(sizeof(int)*n);
     if (c==NULL){
         return NULL;
     }
-    
+
     for (int i=0; i<n; i++){
      c[i]=arr[i];
     }
@@ -23,7 +23,7 @@ char * deepStringCopy(const char * s){
     strcpy(copy, s);
 //     printf("copy %s\n",copy);
     return s;
-    
+
 }
 int main (int argc, char **argv){
 // //     int n=0;
@@ -42,7 +42,7 @@ int main (int argc, char **argv){
 // //     }
 // //     free(table);
 // //     //Valgrind did not see the memroy leak
-    
+
 // // //     int n=5;
 // // //     int *a=(int*) malloc(sizeof(int)*n);
 // // //     for (int i=0; i<n; i++){
@@ -52,7 +52,7 @@ int main (int argc, char **argv){
 // // // //     Shallow Copy
 // // // //     a[0]=42;
 // // // //     printf("b[0]=%d",b[0]);
-// // //     
+// // //
 // // // //  Deep copy
 // // //     int *b=(int*) malloc(sizeof(int)*n);
 // // //     for (int i=0; i<n; i++){
@@ -67,7 +67,7 @@ int main (int argc, char **argv){
     printf("messsage =%s\n",message);
     message[5]='_';
     printf("messsage =%s\n",message);
-    
+
     int length =5;
     char *messagev2 = (char*) malloc(sizeof(char)*(length+1));
     messagev2[0]='H';
@@ -77,7 +77,7 @@ int main (int argc, char **argv){
     messagev2[4]='o';
     messagev2[5]=' ';
     printf("messsagev2 =%s\n",messagev2);
-    
+
     char name[]="Chris";
     strcpy(name,"Joeseph");
 //     strncpy(name,name2,4);
@@ -86,8 +86,10 @@ int main (int argc, char **argv){
 //Deep copy of a String
     char FullName[]="Christopher";
     char *copy = (char*) malloc((strlen(FullName)+1)*sizeof(char));
- 
+
     strcpy(copy, FullName);
     printf("copy %s\n",copy);
+    printf("Valor de Long %d\n",sizeof(long));
+    printf("Valor de Long %d\n",sizeof(int64_t));
 return 0;
 }
