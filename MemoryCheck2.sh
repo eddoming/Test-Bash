@@ -34,7 +34,7 @@ EOL
 
 while true; do
 #ps -p is for the pid number and -C is for the name of the processs
-ps -C firefox -o pid= -o vsz= -o rss= | tee -a $LOG
+ps -C Discord -o pid= -o vsz= -o rss= | tee -a $LOG
 #PID info, vsz virtual memory, rss residual memory
 sleep 4
 done
