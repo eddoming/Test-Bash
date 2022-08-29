@@ -1,0 +1,480 @@
+**Bash Notes**(https://www.youtube.com/c/TechWithTim)
+Refereence (https://linuxize.com/)
+
+Something really usfull are the loops with counters
+`for i in {0..10..2}`
+
+
+  * Command `uptime`, example  "18:38:58 up 6 days, 19:44,  1 user,  load average: 1.19, 1.33, 1.22"
+  * Command `wall` is to write to every one or use `write user`, to activate or deactivate we use `mesg y` or `mesg n`
+
+* Command `who` all the user and `free` the resources
+
+* Command `sort`, list all the inputs in a file, and can be in reverse with `sort -r file.txt`
+
+* Command `shoutdowm -h 10+` or now, same applied to reboot
+
+* Command `whois linuxcommand`, this it is very helpfull because it said what the command do, for example `whois ls`
+
+* Command `tail file.txt`, show the last 10 lines of the file, can change to `tail -n 20 file.txt`
+
+
+
+* Until loops are really useful in daemons
+
+until [CONDITION]
+do
+  [COMMANDS]
+done
+
+An example 
+
+#!/bin/bash
+
+counter=0
+
+until [ $counter -gt 5 ]
+do
+  echo Counter: $counter
+  ((counter++))
+done
+
+
+The following script may be useful when your git host has downtime, and instead of manually typing git pull multiple times until the host is online, you can run the script once. It will try to pull the repository until it is successful.
+
+#!/bin/bash
+
+until git pull &> /dev/null
+do
+    echo "Waiting for the git host ..."
+    sleep 1
+done
+
+echo -e "\nThe git repository is pulled."
+
+* Command `tee`, divide the output in two parts: for example,
+ls | tee prueba.txt | grep 'py'
+
+
+ * Removing files with name commands or hard to erase with terminal
+
+Your default bash shell considers many of these special characters (also known as meta-characters) as commands. If you try to delete or move/copy such files you may end up with errors. In this example, I am trying to delete a file named ‘>file’:
+
+`$ rm >file`
+
+Sample outputs:
+
+rm: missing operand
+Try `rm --help' for more information.
+
+The rm command failed to delete the file due to strange character in filename.
+Tip #1: Put filenames in quotes
+
+The following command is required to copy or delete files with spaces in their name, for example:
+
+`$ cp "my resume.doc" /secure/location/`
+`$ rm "my resume.doc"`
+
+The quotes also prevent the many special characters interpreted by your shell, for example:
+
+`$ rm -v ">file"`
+removed `>file'
+
+The double quotes preserve the value of all characters enclosed, except for the dollar sign, the backticks and the backslash. You can also try single quotes as follows:
+
+`$ rm -v 'a long file   name  here'`
+`$ cp 'my mp3 file.mp3' /backup/disk/`
+
+Tip #2: Try a backslash
+
+You can always insert a backslash () before the special character in your filename:
+
+`$ cp "my resume.doc" /secure/location/`
+`$ rm "*file"`
+
+Tip #3: Try a ./ at the beginning of the filename
+
+The syntax is as follows to delete a file called ‘-file’:
+
+`$ rm -v ./-file`
+removed `./-file'
+
+The ./ at the beginning of the filename forces rm not to interpret – as option to the rm command.
+Tip #4: Try a — at the beginning of the filename
+
+A — signals the end of options and disables further option processing by shell. Any arguments after the — are treated as filenames and arguments. An argument of – is equivalent to –. The syntax is:
+
+`$ rm -v -- -file`
+`$ rm -v -- --file`
+`$ rm -v -- "@#$%^&file"`
+`$ rmdir -v -- "--dirnameHere"`
+
+Tip #5: Remove file by an inode number
+
+The -i option to ls displays the index number (inode) of each file:
+
+ls -li
+
+Use find command as follows to delete the file if the file has inode number 4063242:
+
+`$ find . -inum 4063242 -delete`
+
+OR
+
+`$ find . -inum 4063242 -exec rm -i {} ;`
+
+* Bash break Statement
+
+The break statement terminates the current loop and passes program control to the command that follows the terminated loop. It is used to exit from a for, while, until , or select loop. s The syntax of the break statement takes the following form:
+
+break [n]
+
+[n] is an optional argument and must be greater than or equal to 1. When [n] is provided, the n-th enclosing loop is exited. break 1 is equivalent to break.
+
+To better understand how to use the break statement, let’s take a look at the following examples.
+
+In the script below, the execution of the while loop will be interrupted once the current iterated item is equal to 2:
+
+i=0
+
+while [[ $i -lt 5 ]]
+do
+  echo "Number: $i"
+  ((i++))
+  if [[ $i -eq 2 ]]; then
+    break
+  fi
+done
+
+echo 'All Done!'
+
+Number: 0
+Number: 1
+All Done!
+
+Here is an example of using the break statement inside nested for loops .
+
+When the argument [n] is not given, break terminates the innermost enclosing loop. The outer loops are not terminated:
+
+for i in {1..3}; do
+  for j in {1..3}; do
+    if [[ $j -eq 2 ]]; then
+      break
+    fi
+    echo "j: $j"
+  done
+  echo "i: $i"
+done
+
+echo 'All Done!'
+
+j: 1
+i: 1
+j: 1
+i: 2
+j: 1
+i: 3
+All Done!
+
+If you want to exit from the outer loop, use break 2. Argument 2 tells break to terminate the second enclosing loop:
+
+for i in {1..3}; do
+  for j in {1..3}; do
+    if [[ $j -eq 2 ]]; then
+      break 2
+    fi
+    echo "j: $j"
+  done
+  echo "i: $i"
+done
+
+echo 'All Done!'
+
+j: 1
+All Done!
+
+* Bash continue Statement
+
+The continue statement skips the remaining commands inside the body of the enclosing loop for the current iteration and passes program control to the next iteration of the loop.
+
+The syntax of the continue statement is as follows:
+
+continue [n]
+
+The [n] argument is optional and can be greater than or equal to 1. When [n] is given, the n-th enclosing loop is resumed. continue 1 is equivalent to continue.
+
+In the example below, once the current iterated item is equal to 2, the continue statement will cause execution to return to the beginning of the loop and to continue with the next iteration.
+
+i=0
+
+while [[ $i -lt 5 ]]; do
+  ((i++))
+  if [[ "$i" == '2' ]]; then
+    continue
+  fi
+  echo "Number: $i"
+done
+
+echo 'All Done!'
+
+Number: 1
+Number: 3
+Number: 4
+Number: 5
+All Done!
+
+The following script prints numbers from 1 through 50 that are divisible by 9.
+
+If a number is not divisible by 9, the continue statement skips the echo command and pass control to the next iteration of the loop.
+
+for i in {1..50}; do
+  if [[ $(( $i % 9 )) -ne 0 ]]; then
+    continue
+  fi
+  echo "Divisible by 9: $i"
+done
+
+Divisible by 9: 9
+Divisible by 9: 18
+Divisible by 9: 27
+Divisible by 9: 36
+Divisible by 9: 45
+
+
+
+* if Statement
+
+Bash if conditionals can have different forms. The most basic if statement takes the following form:
+
+if TEST-COMMAND
+then
+  STATEMENTS
+fi
+
+The if statement starts with the if keyword followed by the conditional expression and the then keyword. The statement ends with the fi keyword.
+
+If the TEST-COMMAND evaluates to True, the STATEMENTS gets executed. If TEST-COMMAND returns False, nothing happens; the STATEMENTS get ignored.
+
+In general, it is a good practice always to indent your code and separate code blocks with blank lines. Most people choose to use either 4-space or 2-space indentation. Indentations and blank lines make your code more readable and organized.
+
+Let’s look at the following example script that checks whether a given number is greater than 10:
+
+#!/bin/bash
+
+echo -n "Enter a number: "
+read VAR
+
+if [[ $VAR -gt 10 ]]
+then
+  echo "The variable is greater than 10."
+fi
+
+Save the code in a file and run it from the command line:
+
+bash test.sh
+
+The script will prompt you to enter a number. If, for example, you enter 15, the test command will evaluate to true because 15 is greater than 10, and the echo command inside the then clause will be executed.
+
+The variable is greater than 10.
+
+if..else Statement
+
+The Bash if..else statement takes the following form:
+
+if TEST-COMMAND
+then
+  STATEMENTS1
+else
+  STATEMENTS2
+fi
+
+If the TEST-COMMAND evaluates to True, the STATEMENTS1 will be executed. Otherwise, if TEST-COMMAND returns False, the STATEMENTS2 will be executed. You can have only one else clause in the statement.
+
+Let’s add an else clause to the previous example script:
+
+#!/bin/bash
+
+echo -n "Enter a number: "
+read VAR
+
+if [[ $VAR -gt 10 ]]
+then
+  echo "The variable is greater than 10."
+else
+  echo "The variable is equal or less than 10."
+fi
+
+If you run the code and enter a number, the script will print a different message based on whether the number is greater or less/equal to 10.
+if..elif..else Statement
+
+The Bash if..elif..else statement takes the following form:
+
+if TEST-COMMAND1
+then
+  STATEMENTS1
+elif TEST-COMMAND2
+then
+  STATEMENTS2
+else
+  STATEMENTS3
+fi
+
+If the TEST-COMMAND1 evaluates to True, the STATEMENTS1 will be executed. If the TEST-COMMAND2 evaluates to True, the STATEMENTS2 will be executed. If none of the test commands evaluate to True, the STATEMENTS2 is executed.
+
+You can have one or more elif clauses in the statement. The else clause is optional.
+
+The conditions are evaluated sequentially. Once a condition returns True, the remaining conditions are not performed, and program control moves to the end of the if statements.
+
+Let’s add an elif clause to the previous script:
+
+#!/bin/bash
+
+echo -n "Enter a number: "
+read VAR
+
+if [[ $VAR -gt 10 ]]
+then
+  echo "The variable is greater than 10."
+elif [[ $VAR -eq 10 ]]
+then
+  echo "The variable is equal to 10."
+else
+  echo "The variable is less than 10."
+fi
+
+* Nested if Statements
+
+Bash allows you to nest if statements within if statements. You can place multiple if statements inside another if statement.
+
+The following script will prompt you to enter three numbers and print the largest number among the three numbers.
+
+#!/bin/bash
+
+echo -n "Enter the first number: "
+read VAR1
+echo -n "Enter the second number: "
+read VAR2
+echo -n "Enter the third number: "
+read VAR3
+
+if [[ $VAR1 -ge $VAR2 ]]
+then
+  if [[ $VAR1 -ge $VAR3 ]]
+  then
+    echo "$VAR1 is the largest number."
+  else
+    echo "$VAR3 is the largest number."
+  fi
+else
+  if [[ $VAR2 -ge $VAR3 ]]
+  then
+    echo "$VAR2 is the largest number."
+  else
+    echo "$VAR3 is the largest number."
+  fi
+fi
+
+Here is how the output will look like:
+
+Enter the first number: 4
+Enter the second number: 7
+Enter the third number: 2
+7 is the largest number.
+
+Generally, it is more efficient to use the case statement instead of nested if statements.
+Multiple Conditions
+
+The logical OR and AND operators allow you to use multiple conditions in the if statements.
+
+Here is another version of the script to print the largest number among the three numbers. In this version, instead of the nested if statements, we’re using the logical AND (&&) operator.
+
+#!/bin/bash
+
+echo -n "Enter the first number: "
+read VAR1
+echo -n "Enter the second number: "
+read VAR2
+echo -n "Enter the third number: "
+read VAR3
+
+if [[ $VAR1 -ge $VAR2 ]] && [[ $VAR1 -ge $VAR3 ]]
+then
+  echo "$VAR1 is the largest number."
+elif [[ $VAR2 -ge $VAR1 ]] && [[ $VAR2 -ge $VAR3 ]]
+then
+  echo "$VAR2 is the largest number."
+else
+  echo "$VAR3 is the largest number."
+fi
+
+Test Operators
+
+In Bash, the test command takes one of the following syntax forms:
+
+test EXPRESSION
+[ EXPRESSION ]
+[[ EXPRESSION ]]
+
+To make the script portable, prefer using the old test [ command, which is available on all POSIX shells. The new upgraded version of the test command [[ (double brackets) is supported on most modern systems using Bash, Zsh, and Ksh as a default shell.
+
+To negate the test expression, use the logical NOT (!) operator. When comparing strings , always use single or double quotes to avoid word splitting and globbing issues.
+
+Below are some of the most commonly used operators:
+
+    -n VAR - True if the length of VAR is greater than zero.
+    -z VAR - True if the VAR is empty.
+    STRING1 = STRING2 - True if STRING1 and STRING2 are equal.
+    STRING1 != STRING2 - True if STRING1 and STRING2 are not equal.
+    INTEGER1 -eq INTEGER2 - True if INTEGER1 and INTEGER2 are equal.
+    INTEGER1 -gt INTEGER2 - True if INTEGER1 is greater than INTEGER2.
+    INTEGER1 -lt INTEGER2 - True if INTEGER1 is less than INTEGER2.
+    INTEGER1 -ge INTEGER2 - True if INTEGER1 is equal or greater than INTEGER2.
+    INTEGER1 -le INTEGER2 - True if INTEGER1 is equal or less than INTEGER2.
+    -h FILE - True if the FILE exists and is a symbolic link.
+    -r FILE - True if the FILE exists and is readable.
+    -w FILE - True if the FILE exists and is writable.
+    -x FILE - True if the FILE exists and is executable.
+    -d FILE - True if the FILE exists and is a directory.
+    -e FILE - True if the FILE exists and is a file, regardless of type (node, directory, socket, etc.).
+    -f FILE - True if the FILE exists and is a regular file (not a directory or device).
+
+
+Use the following command to compress an entire directory or a single file on Linux. It’ll also compress every other directory inside a directory you specify–in other words, it works recursively.
+
+tar -czvf name-of-archive.tar.gz /path/to/directory-or-file
+
+Here’s what those switches actually mean:
+
+    -c: Create an archive.
+    -z: Compress the archive with gzip.
+    -v: Display progress in the terminal while creating the archive, also known as “verbose” mode. The v is always optional in these commands, but it’s helpful.
+    -f: Allows you to specify the filename of the archive.
+Exclude Directories and Files
+
+tar -czvf archive.tar.gz /home/ubuntu --exclude=/home/ubuntu/Downloads --exclude=/home/ubuntu/.cache
+tar -czvf archive.tar.gz /home/ubuntu --exclude=*.mp4
+
+Once you have an archive, you can extract it with the tar command. The following command will extract the contents of archive.tar.gz to the current directory.
+
+tar -xzvf archive.tar.gz
+
+It’s the same as the archive creation command we used above, except the -x switch replaces the -c switch. This specifies you want to extract an archive instead of create one.
+
+You may want to extract the contents of the archive to a specific directory. You can do so by appending the -C switch to the end of the command. For example, the following command will extract the contents of the archive.tar.gz file to the /tmp directory.
+
+tar -xzvf archive.tar.gz -C /tmp
+
+
+
+Clase para authentification
+-Si esta autentificado
+-Variables de autenftification
+-por cada webscoeckt
+
+
+
+Websocket library
+-call back
+
+
+{Messagemanager.cpp,HTTP,JSON parse}

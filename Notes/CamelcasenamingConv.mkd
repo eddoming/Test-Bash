@@ -1,0 +1,11 @@
+**CamelCaseNaming**
+Camel case convetion it is based in using a single or compound word that uses capital letters to make different parts of the word easier to read.
+  * Capital letters can only appear at the start of the second word (like someVariable). 
+  * No dots, underscores, numbers, dashes, or any other special characters are allowed within the word.
+
+Some examples:
+    * `Somevariable`
+    * `firstName`
+    * `userOne`
+
+For a class we use capital in the first letter, and we always use a new line when we use a `[,{`

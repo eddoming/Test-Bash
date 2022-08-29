@@ -1,0 +1,27 @@
+**Code Notes**
+***static***
+
+***#pragma once***
+
+"#pragma once" Vieja forma de copilar utilizando solo una vez el codigo, cito de StackOverflow
+once is a non-standard but widely supported preprocessor directive designed to cause the current source file to be included only once in a single compilation. Thus, #pragma once serves the same purpose as #include guards, but with several advantages, including: less code, avoiding name clashes, and improved compile speed.
+
+***"enum class"***
+
+In C++ programming, enum or enumeration is a data type consisting of named values like elements, members, etc., that represent integral constants. It provides a way to define and group integral constants. It also makes the code easy to maintain and less complex. In this tutorial, you will learn about C++ enum in detail.
+
+***Why Do You Use Enums?***
+
+Enums or enumerations are generally used when you expect the variable to select one value from the possible set of values. It increases the abstraction and enables you to focus more on values rather than worrying about how to store them. It is also helpful for code documentation and readability purposes.
+
+
+***Check status of the hard drive***
+
+Ubuntu comes with UDisks2 library, which provides udisks daemon and couple command-line tools to query disk information and otherwise manipulate the drives. In particular, udisksctl status command is useful if you want to find out the information without root privileges locally. 
+
+-sudo apt install iotop, sudo iotop -o
+-sudo lshw -C disk
+-sudo apt install glances, glances
+-sudo apt install monitorix -> sudo systemctl start monitorix -> http://127.0.0.1:8080/monitorix
+
+Extra link : https://askubuntu.com/questions/293426/what-system-monitoring-tools-are-available
