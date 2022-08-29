@@ -1,0 +1,151 @@
+\documentclass{article}
+
+\usepackage{hyperref}
+\usepackage{textpos}
+
+
+\usepackage{eso-pic}% Black line
+\AddToShipoutPictureBG{%
+	\rule{1cm}{\paperheight}%
+}
+
+\usepackage{xcolor,colortbl}
+
+\setlength{\arrayrulewidth}{0.5mm}
+%\setlength{\tabcolsep}{18pt}
+\renewcommand{\arraystretch}{1.5} %%Color tables
+
+\begin{document}
+%{\rowcolors{3}{green!80!yellow!50}{green!70!yellow!40}
+\pagenumbering{gobble}
+
+
+\begin{textblock*}{12cm}(-2.5cm, -3.5cm)
+	bandas de colores?
+\end{textblock*}
+
+\begin{textblock*}{12cm}(-2.5cm, -2.5cm)
+	\TextField[width=4cm,color=0.0 0.0 0.0]{Expediente: }\\
+\end{textblock*}
+
+\begin{textblock*}{12cm}(5.5cm, -2.5cm)
+	{\Huge  {\Huge LOGO?}}
+\end{textblock*}
+
+\begin{textblock*}{12cm}(-2.5cm, -1.5cm)
+	{\huge \textbf{Informe Médico}}
+\end{textblock*}
+
+
+\begin{textblock*}{19cm}(-2.5cm, -0.5cm)
+	\TextField[width=3cm]{Fecha} \TextField[width=3cm]{Hora de Solicitud} \TextField[width=4cm]{Nombre de Empresa} 
+\end{textblock*}
+
+
+\begin{textblock*}{19cm}(-2.5cm, 0.5cm)
+	\TextField[width=3cm]{Hora de arribo: } \TextField[width=4cm]{Hora de término: } 
+\end{textblock*}
+
+
+\begin{textblock*}{19cm}(-2.5cm, 1.5cm)
+	%	{\rowcolors{3}{green!80!yellow!50}{green!70!yellow!40}
+	\begin{tabular}{ |p{9.5cm}|p{0.6cm}p{1.2cm}p{1.2cm}|p{2.7cm}|}
+		\hline
+		\rowcolor{black}
+		\multicolumn{5}{|c|}{{\large \textcolor{white}{Información de paciente}}} \\
+		\hline
+		\TextField[width=7.5cm]{Nombre: } & Sexo: & 	\CheckBox[width=2em]{M} & \CheckBox[width=2em]{F} & \TextField[width=1.3cm]{Edad:} \\
+		\hline
+	\end{tabular}
+\end{textblock*}
+
+
+
+\begin{textblock*}{19cm}(-2.5cm, 3.1cm)
+%	{\rowcolors{3}{green!80!yellow!50}{green!70!yellow!40}
+	\begin{tabular}{ |p{3.5cm}|p{2cm}|p{2.2cm}|p{2.5cm}|p{2.2cm}|p{2.2cm}|  }
+		\hline
+		\hline
+		\TextField[width=1.5cm]{GLASGOW} & \TextField[width=1cm]{FC} & \TextField[width=1cm]{FR} & \TextField[width=1cm]{TEMP} & \TextField[width=1cm]{SPO${_{2}}$} &\TextField[width=1cm]{T/A} \\
+		\hline
+		\hline
+	\end{tabular}
+
+%\TextField[width=10cm, height=20pt]{TEMP}
+\end{textblock*}
+
+
+\begin{textblock*}{19cm}(-2.5cm, 4.2cm)
+\TextField[width=14cm, height=11pt]{Padecimiento actual: }\\
+
+\TextField[width=17.5cm, height=11pt]{}\\
+
+\TextField[width=15.8cm]{Alergias: }\\
+
+\begin{tabular}{|p{1.5cm}|p{12cm}}
+	\hline
+	\rowcolor{black}
+	\textcolor{white}{Alergias: } & \TextField[width=15.2cm]{ }\\
+\end{tabular}\\
+
+
+\TextField[width=3.7cm]{Medicamentos previamente consumidos por enfermedad preexistente o automedicación: }\\
+
+\TextField[width=17.5cm, height=11pt]{}\\
+
+\TextField[width=15.cm]{Signos vitales: }\\
+
+\TextField[width=14.4cm, height=11pt]{Exploración fisica: }\\
+
+\TextField[width=17.5cm, height=11pt]{}\\
+
+\TextField[width=15.3cm]{Diagnóstico: }\\
+
+\begin{tabular}{|p{17cm}|}
+	\hline
+	\rowcolor{black}
+	\multicolumn{1}{|c|}{{\large \textcolor{white}{Tratamiento}}} \\
+	\hline
+	\TextField[width=17cm]{ } \\
+	\TextField[width=17cm]{ } \\
+	\TextField[width=17cm]{ } \\
+	\TextField[width=17cm]{ } \\
+	\TextField[width=17cm]{ } \\
+	\TextField[width=17cm]{ } \\
+	\TextField[width=17cm]{ } \\
+	\hline
+	\hline
+\end{tabular}
+
+\end{textblock*}
+	
+	
+	
+	\begin{textblock*}{7cm}(5.5cm, 20.5cm)
+		\begin{Form}[action={http://your-web-server.com/path/receiveform.cgi}]
+			\begin{tabular}{l}
+				\CheckBox[width=1em]{TEST}
+			\end{tabular}
+		\end{Form}
+	\end{textblock*}
+
+\begin{textblock*}{12cm}(-2.5cm, 21.5cm)
+	bandas de colores?\\
+	\href{https://www.facebook.com/psyjames}{Algun link?}
+	
+\end{textblock*}
+%	
+%	
+%	\begin{Form}[action={http://your-web-server.com/path/receiveform.cgi}]
+%		\begin{tabular}{l}
+%			\TextField{Name} \\\\
+%			\CheckBox[width=1em]{Check} \\\\
+%%			\Submit{Submit}\\
+%		\end{tabular}
+%	\end{Form}
+
+
+\end{document}
+https://tex.stackexchange.com/questions/14842/creating-fillable-pdfs
+https://tex.stackexchange.com/questions/345568/making-fillable-forms-in-latex-using-textfield-and-checkbox
+https://tex.stackexchange.com/questions/386576/how-to-have-this-input-form-field-on-many-lines
