@@ -1,0 +1,1 @@
+Second part is to build a code of guessing game, I suppose we will see a lot of new thinks

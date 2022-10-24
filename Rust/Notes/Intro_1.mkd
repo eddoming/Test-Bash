@@ -1,0 +1,8 @@
+Ok! First I learn to install the latest version of Rust
+"curl --proto "=https" --tlsv1.2 https://sh.rustup.rs -sSf | sh"
+rustup update
+We build the code with
+rustc 
+We always use cargo
+cargo new <ProjectName>
+cargo build, cargo run, cargo check cargo build --release 
