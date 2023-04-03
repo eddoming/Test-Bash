@@ -1,0 +1,85 @@
+# TPC guide
+Based in the next two links
+https://www.cyberciti.biz/faq/linux-tcp-tuning/
+https://madflojo.medium.com/maximizing-tcp-throughput-in-linux-understanding-and-tuning-send-and-receive-buffers-92df654c415f
+
+## Understanding TCP
+
+Typically, the default size of a packet on Linux systems is 1500 bytes, with the first 24 bytes being the packet header; this means a single packet can hold 1476 bytes of application data. To send 4000 bytes of application data, the Kernel will need to send three packets.
+
+As an application, we don't need to worry about how much data goes into one packet. Applications write data to a buffer. The Kernel takes the data from that buffer and sends it to the target system in however many packets are required.
+
+The Kernel will also keep the application data within the Send Buffer until the Server has acknowledged the sent packets. It does this in case packets need to be retransmitted in cases of packet loss.
+
+## The Receiver
+
+On the Server, there exists another Buffer called the Receive Buffer. As packets are received and interpreted by the Kernel, data from those packets are written into the Receive Buffer.
+
+Just as applications are oblivious to the Send Buffer, applications also don't knowingly interact with the Receive Buffer. Typically, an application will read data from a socket using the recv() system call. However, the application reads the available data from the Receive Buffer underneath the covers.
+
+## Increasing the Buffer Size
+
+The Send and Receive Buffers are tunable; they can be adjusted in Linux using the /etc/sysctl.conf file. To see the current values, we will use the sysctl command.
+
+`sysctl net.ipv4.tcp_wmem`
+
+net.ipv4.tcp_wmem = 4096 16384 4194304
+
+From the above command output, we can see three values currently exist.
+
+The first 4096 (4KB) is the minimum buffer size. By default, this minimum value is set at the same size as the system page size. This minimum is set to ensure that some buffer will remain in low-memory situations.
+
+The second value 16384 (16KB) is the default size. All TCP sockets on the system will receive an initial buffer size using the default size. An interesting note is that net.ipv4.tcp_wmem will override net.core.wmem_default which is the default Send Buffer size for all network protocols (TCP, UDP, etc.).
+
+The third value 4194304 (4MB) is the maximum buffer size. Unlike the default size, the maximum value cannot override net.core.wmem_max which sets the maximum Send Buffer size for all network protocols.
+
+When a new TCP connection is established, a Send Buffer will be created using the default value (16KB); the buffer size will then be automatically adjusted within the maximum and minimum boundaries as needed and based on usage.
+
+For most situations adjusting the maximum value is enough, and rarely do the default or minimum values need to be changed.
+
+## Adjusting the Send Buffer
+
+To change the buffer sizes, we can use the sysctl command again.
+
+`sysctl -w net.ipv4.tcp_wmem="4096 16384 8388608"`
+
+The above command adjusts the Send Buffer to 8 MB; however, the change is not persistent after reboots. To make this change permanent, we can add the exact change into the /etc/sysctl.conf file.
+
+## Adjusting the Receive Buffer
+
+The Receive Buffer is adjustable, just like the Send Buffer. To see the current values, we can use the sysctl command again.
+
+`$ sysctl net.ipv4.tcp_rmem`
+
+net.ipv4.tcp_rmem = 4096 131072 6291456
+
+Like the previous tunable, the three values represent TCP's minimum, default, and maximum buffer sizes. Also, like before, the maximum value for the TCP Receive Buffer cannot exceed net.core.rmem_max which defines the maximum Receive Buffer size for all network protocols.
+
+In the example above, the maximum buffer size is set to 6 MB; we can adjust this to 12 MB using the sysctl command.
+
+`sysctl -w net.ipv4.tcp_rmem="4096 131072 12582912"`
+
+As with the previous example, to make this change permanent, the settings must be added to the /etc/sysctl.conf file.
+
+## When to adjust buffer sizes
+
+Now that we know how to adjust the Send and Recieve buffers, when should we change them? For most systems, the default values are generous. However, there are situations where adjusting these buffers is warranted.
+
+A prime example is when a TCP client sends data over an unreliable network. Since the Send Buffer must retain data for packets that have not been acknowledged, connections with high packet loss could cause the Send Buffer to become full. When the Send Buffer is full, the application can no longer add data to the buffer and will often block (wait) trying to add data.
+
+This scenario is prevalent in the Internet-of-Things space, where devices are more likely to utilize unreliable networks. However, unreliable networks are only one of the situations these buffer sizes might need adjusting.
+
+As described at the beginning of this article, the Server application is constantly reading from the Receive Buffer. However, if the application cannot keep pace with the amount of incoming data, the Receive Buffer may become full. When this happens, the Server will start notifying the Client by reducing the “window” size within acknowledgment packets. As the application reads data from the buffer, the window size within acknowledgment packets will increase. Thus notifying the Client that it can resume sending data.
+
+# This!
+
+is the most important part, becuase it let you see what is happening, 
+and see if you are satturating the port before doing something
+
+## Viewing the buffer utilization
+
+When we suspect TCP buffers might need adjusting either through poor application performance (lots of blocking while writing to the buffer) or through network monitoring around window scaling. We can verify buffer utilization with the netstat command.
+
+Within the output of the netstat command, two columns represent buffer utilization. The Recv-Q column represents the number of bytes in the Receive Buffer waiting to be read by the receiver application. The Send-Q column represents the number of bytes in the Send Buffer waiting to be sent & acknowledged by the remote system.
+
+A typical healthy application should have low Send and Receive Buffers utilization. It is common to see some utilization of buffers, but consistent significant utilization should be investigated.

@@ -1,5 +1,6 @@
 # Markdown syntax guide
 I can use ctrl+shift+m to see the Preview
+wrong it is Ctrl+Shift+V, new link https://code.visualstudio.com/docs/languages/markdown
 ## Headers
 
 # This is a Heading h1
