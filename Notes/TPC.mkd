@@ -2,6 +2,12 @@
 Based in the next two links
 https://www.cyberciti.biz/faq/linux-tcp-tuning/
 https://madflojo.medium.com/maximizing-tcp-throughput-in-linux-understanding-and-tuning-send-and-receive-buffers-92df654c415f
+https://www.ibm.com/docs/en/zos/2.1.0?topic=functions-recv-receive-data-socket
+https://man7.org/linux/man-pages/man2/recv.2.html
+
+## man recv
+
+If no messages are available at the socket, the receive calls wait for a message to arrive, unless the socket is nonblocking (see fcntl(2)), in which case the value -1 is returned and errno is set to EAGAIN or EWOULDBLOCK.  The receive calls normally return any data available, up to the requested amount, rather than waiting for receipt of the full amount requested.
 
 ## Understanding TCP
 
