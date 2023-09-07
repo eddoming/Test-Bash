@@ -1,0 +1,7 @@
+Read from a file an convert to base64 1
+Read from a file an convert to base64 2
+Read from a file an convert to base64 3
+Read from a file an convert to base64 4
+Read from a file an convert to base64 5
+Read from a file an convert to base64 6
+
